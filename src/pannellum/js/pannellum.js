@@ -636,16 +636,16 @@ window.pannellum = (function(window, document, undefined) {
  * @param {MouseEvent} event - Right click location
  */
     function aboutMessage(event) {
-      var pos = mousePosition(event);
-      aboutMsg.style.left = pos.x + 'px';
-      aboutMsg.style.top = pos.y + 'px';
-      clearTimeout(aboutMessage.t1);
-      clearTimeout(aboutMessage.t2);
-      aboutMsg.style.display = 'block';
-      aboutMsg.style.opacity = 1;
-      aboutMessage.t1 = setTimeout(function() {aboutMsg.style.opacity = 0;}, 2000);
-      aboutMessage.t2 = setTimeout(function() {aboutMsg.style.display = 'none';}, 2500);
-      event.preventDefault();
+      // var pos = mousePosition(event);
+      // aboutMsg.style.left = pos.x + 'px';
+      // aboutMsg.style.top = pos.y + 'px';
+      // clearTimeout(aboutMessage.t1);
+      // clearTimeout(aboutMessage.t2);
+      // aboutMsg.style.display = 'block';
+      // aboutMsg.style.opacity = 1;
+      // aboutMessage.t1 = setTimeout(function() {aboutMsg.style.opacity = 0;}, 2000);
+      // aboutMessage.t2 = setTimeout(function() {aboutMsg.style.display = 'none';}, 2500);
+      // event.preventDefault();
     }
 
     /**
@@ -669,6 +669,10 @@ window.pannellum = (function(window, document, undefined) {
  * @param {MouseEvent} event - Document mouse down event.
  */
     function onDocumentMouseDown(event) {
+
+      if (event.button <= 0)
+        return;
+
     // Override default action
       event.preventDefault();
       // But not all of it

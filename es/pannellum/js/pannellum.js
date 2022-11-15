@@ -683,21 +683,16 @@ window.pannellum = function (window, document, undefined) {
     */
 
 
-    function aboutMessage(event) {
-      var pos = mousePosition(event);
-      aboutMsg.style.left = pos.x + 'px';
-      aboutMsg.style.top = pos.y + 'px';
-      clearTimeout(aboutMessage.t1);
-      clearTimeout(aboutMessage.t2);
-      aboutMsg.style.display = 'block';
-      aboutMsg.style.opacity = 1;
-      aboutMessage.t1 = setTimeout(function () {
-        aboutMsg.style.opacity = 0;
-      }, 2000);
-      aboutMessage.t2 = setTimeout(function () {
-        aboutMsg.style.display = 'none';
-      }, 2500);
-      event.preventDefault();
+    function aboutMessage(event) {// var pos = mousePosition(event);
+      // aboutMsg.style.left = pos.x + 'px';
+      // aboutMsg.style.top = pos.y + 'px';
+      // clearTimeout(aboutMessage.t1);
+      // clearTimeout(aboutMessage.t2);
+      // aboutMsg.style.display = 'block';
+      // aboutMsg.style.opacity = 1;
+      // aboutMessage.t1 = setTimeout(function() {aboutMsg.style.opacity = 0;}, 2000);
+      // aboutMessage.t2 = setTimeout(function() {aboutMsg.style.display = 'none';}, 2500);
+      // event.preventDefault();
     }
     /**
     * Calculate mouse position relative to top left of viewer container.
@@ -723,7 +718,8 @@ window.pannellum = function (window, document, undefined) {
 
 
     function onDocumentMouseDown(event) {
-      // Override default action
+      if (event.button <= 0) return; // Override default action
+
       event.preventDefault(); // But not all of it
 
       container.focus(); // Only do something if the panorama is loaded
