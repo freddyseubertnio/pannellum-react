@@ -665,41 +665,40 @@ window.pannellum = (function (window, document, undefined) {
       }
 
       // Do not react on left mouse button drag (for use in lightbox)
-      if (event.button <= 0)
-        return;
+      if (event.button > 0) {
+        // Calculate mouse position relative to top left of viewer container
+        var pos = mousePosition(event);
 
-      // Calculate mouse position relative to top left of viewer container
-      var pos = mousePosition(event);
+        // Log pitch / yaw of mouse click when debugging / placing hot spots
+        if (config.hotSpotDebug) {
+          var coords = mouseEventToCoords(event);
+          console.log('Pitch: ' + coords[0] + ', Yaw: ' + coords[1] + ', Center Pitch: ' +
+            config.pitch + ', Center Yaw: ' + config.yaw + ', HFOV: ' + config.hfov);
+        }
 
-      // Log pitch / yaw of mouse click when debugging / placing hot spots
-      if (config.hotSpotDebug) {
-        var coords = mouseEventToCoords(event);
-        console.log('Pitch: ' + coords[0] + ', Yaw: ' + coords[1] + ', Center Pitch: ' +
-          config.pitch + ', Center Yaw: ' + config.yaw + ', HFOV: ' + config.hfov);
+        // Turn off auto-rotation if enabled
+        stopAnimation();
+
+        stopOrientation();
+        config.roll = 0;
+
+        speed.hfov = 0;
+
+        isUserInteracting = true;
+        latestInteraction = Date.now();
+
+        onPointerDownPointerX = pos.x;
+        onPointerDownPointerY = pos.y;
+
+        onPointerDownYaw = config.yaw;
+        onPointerDownPitch = config.pitch;
+
+        uiContainer.classList.add('pnlm-grabbing');
+        uiContainer.classList.remove('pnlm-grab');
+
+        fireEvent('mousedown', event);
+        animateInit();
       }
-
-      // Turn off auto-rotation if enabled
-      stopAnimation();
-
-      stopOrientation();
-      config.roll = 0;
-
-      speed.hfov = 0;
-
-      isUserInteracting = true;
-      latestInteraction = Date.now();
-
-      onPointerDownPointerX = pos.x;
-      onPointerDownPointerY = pos.y;
-
-      onPointerDownYaw = config.yaw;
-      onPointerDownPitch = config.pitch;
-
-      uiContainer.classList.add('pnlm-grabbing');
-      uiContainer.classList.remove('pnlm-grab');
-
-      fireEvent('mousedown', event);
-      animateInit();
     }
 
     /**
