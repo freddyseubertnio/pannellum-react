@@ -718,16 +718,17 @@ window.pannellum = function (window, document, undefined) {
 
 
     function onDocumentMouseDown(event) {
-      if (event.button <= 0) return; // Override default action
-
+      // Override default action
       event.preventDefault(); // But not all of it
 
       container.focus(); // Only do something if the panorama is loaded
 
       if (!loaded || !config.draggable) {
         return;
-      } // Calculate mouse position relative to top left of viewer container
+      } // Do not react on left mouse button drag (for use in lightbox)
 
+
+      if (event.button <= 0) return; // Calculate mouse position relative to top left of viewer container
 
       var pos = mousePosition(event); // Log pitch / yaw of mouse click when debugging / placing hot spots
 
