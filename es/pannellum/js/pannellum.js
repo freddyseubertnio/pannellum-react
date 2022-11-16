@@ -141,12 +141,12 @@ window.pannellum = function (window, document, undefined) {
     var dragFix = document.createElement('div');
     dragFix.className = 'pnlm-dragfix';
     uiContainer.appendChild(dragFix); // Display about information on right click
+    // var aboutMsg = document.createElement('span');
+    // aboutMsg.className = 'pnlm-about-msg';
+    // aboutMsg.innerHTML = '<a href="https://pannellum.org/" target="_blank">Pannellum</a>';
+    // uiContainer.appendChild(aboutMsg);
 
-    var aboutMsg = document.createElement('span');
-    aboutMsg.className = 'pnlm-about-msg';
-    aboutMsg.innerHTML = '<a href="https://pannellum.org/" target="_blank">Pannellum</a>';
-    uiContainer.appendChild(aboutMsg); //dragFix.addEventListener('contextmenu', aboutMessage);
-    // Create info display
+    dragFix.addEventListener('contextmenu', contextMenu); // Create info display
 
     var infoDisplay = {}; // Hot spot debug indicator
 
@@ -677,13 +677,14 @@ window.pannellum = function (window, document, undefined) {
       }
     }
     /**
-    * Displays about message.
+    * Handle Mouse Right click
     * @private
     * @param {MouseEvent} event - Right click location
     */
 
 
-    function aboutMessage(event) {// var pos = mousePosition(event);
+    function contextMenu(event) {
+      // var pos = mousePosition(event);
       // aboutMsg.style.left = pos.x + 'px';
       // aboutMsg.style.top = pos.y + 'px';
       // clearTimeout(aboutMessage.t1);
@@ -692,7 +693,7 @@ window.pannellum = function (window, document, undefined) {
       // aboutMsg.style.opacity = 1;
       // aboutMessage.t1 = setTimeout(function() {aboutMsg.style.opacity = 0;}, 2000);
       // aboutMessage.t2 = setTimeout(function() {aboutMsg.style.display = 'none';}, 2500);
-      // event.preventDefault();
+      event.preventDefault();
     }
     /**
     * Calculate mouse position relative to top left of viewer container.
