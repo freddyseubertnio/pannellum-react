@@ -794,9 +794,13 @@ window.pannellum = (function (window, document, undefined) {
  */
     function onDocumentTouchStart(event) {
       // Only do something if the panorama is loaded
-      if (!loaded || !config.draggable) {
-        return;
-      }
+      if (!loaded || !config.draggable) return;
+
+      // only react on at least two fingers
+      if (event.targetTouches.length < 2) return;
+
+      // stop bubbling
+      event.stopPropagation();
 
       // Turn off auto-rotation if enabled
       stopAnimation();
