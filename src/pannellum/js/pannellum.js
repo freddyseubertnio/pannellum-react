@@ -798,36 +798,39 @@ window.pannellum = (function (window, document, undefined) {
         return;
       }
 
-      // Turn off auto-rotation if enabled
-      stopAnimation();
+      // Only react on two fingers or more
+      if (event.targetTouches >= 2) {
+        // Turn off auto-rotation if enabled
+        stopAnimation();
 
-      stopOrientation();
-      config.roll = 0;
+        stopOrientation();
+        config.roll = 0;
 
-      speed.hfov = 0;
+        speed.hfov = 0;
 
-      // Calculate touch position relative to top left of viewer container
-      var pos0 = mousePosition(event.targetTouches[0]);
+        // Calculate touch position relative to top left of viewer container
+        var pos0 = mousePosition(event.targetTouches[0]);
 
-      onPointerDownPointerX = pos0.x;
-      onPointerDownPointerY = pos0.y;
+        onPointerDownPointerX = pos0.x;
+        onPointerDownPointerY = pos0.y;
 
-      if (event.targetTouches.length == 2) {
-        // Down pointer is the center of the two fingers
-        var pos1 = mousePosition(event.targetTouches[1]);
-        onPointerDownPointerX += (pos1.x - pos0.x) * 0.5;
-        onPointerDownPointerY += (pos1.y - pos0.y) * 0.5;
-        onPointerDownPointerDist = Math.sqrt((pos0.x - pos1.x) * (pos0.x - pos1.x) +
-          (pos0.y - pos1.y) * (pos0.y - pos1.y));
+        if (event.targetTouches.length == 2) {
+          // Down pointer is the center of the two fingers
+          var pos1 = mousePosition(event.targetTouches[1]);
+          onPointerDownPointerX += (pos1.x - pos0.x) * 0.5;
+          onPointerDownPointerY += (pos1.y - pos0.y) * 0.5;
+          onPointerDownPointerDist = Math.sqrt((pos0.x - pos1.x) * (pos0.x - pos1.x) +
+            (pos0.y - pos1.y) * (pos0.y - pos1.y));
+        }
+        isUserInteracting = true;
+        latestInteraction = Date.now();
+
+        onPointerDownYaw = config.yaw;
+        onPointerDownPitch = config.pitch;
+
+        fireEvent('touchstart', event);
+        animateInit();
       }
-      isUserInteracting = true;
-      latestInteraction = Date.now();
-
-      onPointerDownYaw = config.yaw;
-      onPointerDownPitch = config.pitch;
-
-      fireEvent('touchstart', event);
-      animateInit();
     }
 
     /**
